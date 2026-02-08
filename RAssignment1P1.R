@@ -9,8 +9,6 @@ PuromycinDesignMatrix <- as.matrix(PuromycinDesignDF)
 data(Puromycin)
 force(Puromycin)
 
-
-
 class(PuromycinDesignMatrix) # verify it's a matrix
 str(PuromycinDesignMatrix) # check structure
 head(PuromycinDesignMatrix) # view first few rows
@@ -67,11 +65,21 @@ cumsum(prop_variance)  # Cumulative proportion
 
 
 
+######### P1.i.d ##########
+data(Puromycin)
+
+X <- model.matrix(rate ~ conc * state, data = Puromycin)
+dim(X)
+X
 
 
 
 
 
+
+
+
+############### Original File #####################
 f1 = lm(Volume~Girth+Height,data=trees)
 summary(f1)
 model.matrix(f1)

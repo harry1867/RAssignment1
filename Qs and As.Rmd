@@ -1,0 +1,84 @@
+---
+title: "Questions and Responses"
+author: "Feinman"
+date: "2026-02-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+### Q: in the R dataset Puromycin, explain the column names: conc, reate, state.
+
+the built-in R dataset **`Puromycin`**, the columns come from a classic enzyme kinetics experiment. Here’s what each one means:
+
+### `conc`
+
+-   **Substrate concentration**
+
+    Measured in **parts per million (ppm)**
+
+    This is the concentration of **puromycin**, the substance affecting the reaction
+
+    Think of this as the *input level* being fed to the enzyme system.
+
+### `rate`
+
+(I’m assuming you meant `rate`, not `reate` — the column name is `rate` in R.)
+
+-   **Reaction rate**
+
+-   Measured as the **rate of change in optical density** (ΔOD per minute)
+
+-   This reflects how fast the enzymatic reaction is happening
+
+This is typically the **response variable** in regressions using this dataset.
+
+### `state`
+
+-   A **factor** indicating the experimental condition
+
+    Two levels:
+
+    -   `"treated"` – the enzyme was treated with puromycin
+
+    -   `"untreated"` – the enzyme was not treated
+
+This lets you compare how treatment changes the reaction rate at the same concentration.
+
+### How they’re usually used together
+
+A common model looks like:
+
+```         
+lm(rate ~ conc * state, data = Puromycin) 
+```
+
+Which asks:
+
+-   How does reaction rate change with concentration?
+
+-   Does treatment shift the baseline rate (intercept)?
+
+-   Does treatment change the *effect* of concentration (slope)?
