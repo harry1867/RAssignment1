@@ -82,3 +82,142 @@ Which asks:
 -   Does treatment shift the baseline rate (intercept)?
 
 -   Does treatment change the *effect* of concentration (slope)?
+
+\_\_\_\_\_\_\_\_\_\_\_\_
+
+Liam Chat Gpt Question:
+
+In R, what does the output of summary() function mean when applied to a linear model?
+
+Answer:
+
+When you run `summary()` on a linear model in R (created with `lm()`), R is giving you a **compact statistical report** about how well the model fits and how each predictor behaves. Think of it as the model’s “report card.”
+
+Here’s how to read it, section by section.
+
+## 1. Call
+
+```         
+Call: lm(formula = y ~ x1 + x2, data = mydata) 
+```
+
+This just reminds you **what model you fit**—the response variable, predictors, and data used.
+
+## 2. Residuals
+
+```         
+Residuals:     Min      1Q  Median      3Q     Max 
+```
+
+Residuals are the **differences between observed and predicted values**.
+
+-   **Min / Max**: extreme errors
+
+-   **1Q / Median / 3Q**: distribution of residuals
+
+What you want:
+
+-   Median close to **0**
+
+-   Rough symmetry around 0\
+    (Big skew or extreme values can signal problems like nonlinearity or outliers.)
+
+## 3. Coefficients
+
+```         
+Coefficients:             Estimate Std. Error t value Pr(>|t|) (Intercept) x1 x2 
+```
+
+This is the heart of the summary.
+
+### Columns explained
+
+-   **Estimate**\
+    The estimated regression coefficient\
+    → “For a one-unit increase in `x`, `y` changes by this amount (holding others constant).”
+
+-   **Std. Error**\
+    Uncertainty of the estimate\
+    → Smaller = more precise estimate
+
+-   **t value**
+
+    ```         
+    Estimate / Std. Error 
+    ```
+
+    Measures how far the estimate is from zero in standard-error units
+
+-   **Pr(\>\|t\|)** (p-value)\
+    Tests **H₀: coefficient = 0**
+
+    Common interpretation:
+
+    -   `< 0.05` → statistically significant
+
+    -   `≥ 0.05` → not strong evidence of an effect
+
+The stars (`***`, `**`, `*`) are just visual shortcuts for significance levels.
+
+## 4. Residual Standard Error (RSE)
+
+```         
+Residual standard error: 2.31 on 96 degrees of freedom 
+```
+
+-   Typical size of prediction errors
+
+-   In the **units of the response variable**
+
+-   Lower is better (but only meaningful relative to the scale of `y`)
+
+## 5. Multiple R-squared and Adjusted R-squared
+
+```         
+Multiple R-squared:  0.62 Adjusted R-squared: 0.59 
+```
+
+-   **Multiple R²**\
+    Proportion of variance in `y` explained by the model
+
+-   **Adjusted R²**\
+    Penalizes for extra predictors\
+    → Better for comparing models with different numbers of variables
+
+Rule of thumb:
+
+-   Adjusted R² is usually the one you trust more
+
+## 6. F-statistic
+
+```         
+F-statistic: 15.4 on 2 and 96 DF, p-value: 1.2e-06 
+```
+
+This tests:
+
+> **Do all predictors together explain more variance than a model with no predictors?**
+
+-   Null hypothesis: all coefficients (except intercept) = 0
+
+-   Small p-value → the model is **overall significant**
+
+## Big picture
+
+`summary(lm())` tells you:
+
+-   🔹 How strong the overall model is
+
+-   🔹 Which predictors matter (and which don’t)
+
+-   🔹 How precise the estimates are
+
+-   🔹 How much variation you’re explaining
+
+If you want, I can:
+
+-   Walk through a **real example output line by line**
+
+-   Explain **common traps** (like over-interpreting R²)
+
+-   Help you interpret your **own model output** 👀
